@@ -166,3 +166,177 @@ class Codechef(object):
         response = self._GET(url, params)
 
         return response
+
+    def get_institutions(self, search, offset=0, limit=10):
+        '''
+        get list of institutions
+        :param search: String. Search string for institution. eg. jaypee
+        :param offset: Integer. Starting index of list
+        :param limit: Integer. Number of entities to be fetched, max 100
+        '''
+        url = 'https://api.codechef.com/ide/institution'
+        params = (
+            ('search', search),
+            ('offset', offset),
+            ('limit', limit),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def get_languages(self, search='', offset=0, limit=10):
+        '''
+        get list of languages on codechef
+        :param search: String. Search string for lnguage. eg. c
+        :param offset: Integer. Starting index of list
+        :param limit: Integer. Number of languages to be fetched, max 100
+        '''
+        url = 'https://api.codechef.com/ide/language'
+        params = (
+            ('search', search),
+            ('offset', offset),
+            ('limit', limit),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def get_problems_by_category(self, category_name, fields=[], offset=0, limit=10, sortBy='successfulSubmissions', sortOrder='asc'):
+        '''
+        get list of problems by category name provided
+        :param category_name: String. Possible categories are: school, easy, medium, hard, challenge, extcontest
+        :param fields: List. Possible fields are: problemCode, problemName, successfulSubmissions, accuracy. Multiple fields can be entered using comma.
+        :param offset: Integer. Starting index of the list eg.4
+        :param limit: Integer. Number of problems in a list(max 100), e.g. 10
+        :param sortBy: String. Possible fields are: problemCode, problemName, successfulSubmissions, accuracy.
+        :param sortOrder: String. Possible fields are: asc, desc
+        '''
+        url = 'https://api.codechef.com/problems/' + category_name
+        params = (
+            ('fields', ','.join(fields)),
+            ('offset', offset),
+            ('limit', limit),
+            ('sortBy', sortBy),
+            ('sortOrder', sortOrder),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def get_problems_by_tags(self, tags=[], fields=[], limit=10, offset=0):
+        '''
+        get problems by given tags
+        :param tags: List. Takes comma separated tags/authors. eg: jan13,kingofnumbers
+        :param fields: List. Possible fields are: code, tags, author, solved, attempted, partiallySolved. Multiple fields can be entered using comma.
+        :param limit: Integer. Limit of list(max 20)
+        :param offset: Integer. Starting index of list
+        '''
+        url = 'https://api.codechef.com/tags/problems'
+        params = (
+            ('filter', ','.join(tags)),
+            ('fields', ','.join(fields)),
+            ('limit', limit),
+            ('offset', offset),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def get_rankings(self, contest_code, fields=[], country='', institution='', institutionType='', offset=0, limit=10, sortBy='rank', sortOrder='asc'):
+        '''
+        get rankings for a particular contest
+        :param contest_code: String. Contest code eg. JAN17
+        :param fields: List. Possible fields are: rank, username, totalTime, penalty, country, countryCode, institution, rating, institutionType, contestId, contestCode, totalScore, problemScore. Multiple fields can be entered using comma.
+        :param country: String. Country to which the user belongs, eg. India
+        :param institution: String. Institution to which the user belongs, eg. Jaypee Institute of Information Technology
+        :param institutionType: String. Possible values: school, college or organization.
+        :param offset: Integer. Starting index of the list eg.4
+        :param limit: Integer. Number of rankings in a list(max 100), e.g. 10
+        :param sortBy: String. Possible fields are: rank.
+        :param sortOrder: String. Possible fields are: asc, desc
+        '''
+        url = 'https://api.codechef.com/rankings/' + contest_code
+        params = (
+            ('fields', ','.join(fields)),
+            ('country', country),
+            ('institution', institution),
+            ('institutionType', institutionType),
+            ('offset', offset),
+            ('limit', limit),
+            ('sortBy', sortBy),
+            ('sortOrder', sortOrder),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def get_ratings(self, contest_type, fields=[], country='', institution='', institutionType='', offset=0, limit=10, sortBy='globalRank', sortOrder='asc'):
+        '''
+        get rankings for a particular contest
+        :param contest_type: String. enter contest type for which you want to fetch the ranklist: all, cookOff, longChallenge, lunchTime, cookOffSchool, longChallengeSchool, lunchTimeSchool, allSchool.
+        :param fields: List. Possible fields are: username, globalRank, countryCode, countryRank, country, institution, institutionType, rating, diff.  Multiple fields can be entered using comma.
+        :param country: String. Country to which the user belongs, eg. India
+        :param institution: String. Institution to which the user belongs, eg. Jaypee Institute of Information Technology
+        :param institutionType: String. Possible values: school, college or organization.
+        :param offset: Integer. Starting index of the list eg.4
+        :param limit: Integer. Number of rankings in a list(max 100), e.g. 10
+        :param sortBy: String. Possible fields are: username, globalRank, rating, diff.
+        :param sortOrder: String. Possible fields are: asc, desc
+        '''
+        url = 'https://api.codechef.com/ratings/' + contest_type
+        params = (
+            ('fields', ','.join(fields)),
+            ('country', country),
+            ('institution', institution),
+            ('institutionType', institutionType),
+            ('offset', offset),
+            ('limit', limit),
+            ('sortBy', sortBy),
+            ('sortOrder', sortOrder),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def get_user_list(self, search, fields=[], offset=0, limit=10):
+        '''
+        get users list
+        :param search: String. Search user by prefix
+        :param fields: List. Possible fields are: username, fullname, country, state, city, rankings, ratings, occupation, organization, language. Multiple fields can be entered using comma.
+        :param offset: Integer. Starting index of list
+        :param limit: Integer. Number of users to be fetched, max 20
+        '''
+        url = 'https://api.codechef.com/users'
+
+        params = (
+            ('fields', ','.join(fields)),
+            ('offset', offset),
+            ('limit', limit),
+            ('search', search),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def whoami(self):
+        '''
+        fetch details of login user
+        '''
+        url = 'https://api.codechef.com/users/me'
+        response = self._GET(url)
+
+        return response
+
+    def get_user(self, user_name, fields=[]):
+        '''
+        get details of a user
+        :param user_name: String. username of user eg. arpit147
+        :param fields: List. Possible fields are: username, fullname, country, state, city, rankings, ratings, occupation, language, organization, problemStats, submissionStats. Multiple fields can be entered using comma.
+        '''
+        url = 'https://api.codechef.com/users/' + user_name
+        params = (
+            ('fields', ','.join(fields)),
+        )
+        response = self._GET(url, params)
+
+        return response
