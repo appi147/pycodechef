@@ -96,3 +96,73 @@ class Codechef(object):
         response = self._GET(url, params)
 
         return response
+
+    def get_contest_list(self, fields=[], status='', offset=0, limit=10, sortBy='startDate', sortOrder='desc'):
+        '''
+        get list of contests
+        :param fields: List. Possible fields are: code, name, startDate, endDate. Multiple fields can be entered using comma.
+        :param status: String. Possible values: past, present, future
+        :param offset: Integer. Starting index of the list eg.4
+        :param limit: Integer. Number of contests in a list(max 100), e.g. 10
+        :param sortBy: String. Possible fields are: name, startDate, endDate.
+        :param sortOrder: String. Possible fields are: asc, desc
+        '''
+        url = 'https://api.codechef.com/contests/'
+        params = (
+            ('fields', ','.join(fields)),
+            ('status', status),
+            ('offset', offset),
+            ('limit', limit),
+            ('sortBy', sortBy),
+            ('sortOrder', sortOrder),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def get_country_list(self, search='', offset=0, limit=10):
+        '''
+        get country list
+        :param search: String. Search string for country by prefix, eg. search by 'jap' will return Japan.
+        :param offset: Integer. Starting index of the list eg.4
+        :param limit: Integer. Number of countries in a list(max 100), e.g. 10
+        '''
+        url = 'https://api.codechef.com/country'
+        params = (
+            ('search', search),
+            ('offset', offset),
+            ('limit', limit),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def run_code(self, source_code, language, sample_input):
+        '''
+        takes input, language and source code and runs on codechef ide
+        :param source_code: String. Source code of submission
+        :param language: String. language of submission
+        :param input: String. input of submission
+        '''
+        url = 'https://api.codechef.com/ide/run'
+        params = (
+            ('sourceCode', source_code),
+            ('language', language),
+            ('input', sample_input),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def get_status_code(self, link):
+        '''
+        get status of submitted code
+        :param link: String. Enter status code recieved after code execution. eg. VGQUp0
+        '''
+        url = 'https://api.codechef.com/ide/status'
+        params = (
+            ('link', link),
+        )
+        response = self._GET(url, params)
+
+        return response
