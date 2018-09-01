@@ -68,6 +68,54 @@ class Codechef(object):
         except ValueError as err:
             return {'success': False, 'error': err}
 
+    def _POST(self, url, params=None):
+        '''
+        post to api
+        :param url: String. endpoint to fetch
+        :param params: query parameters given
+        '''
+        token = "Bearer {}".format(self.access_token)
+        headers = {
+            'Accept': 'application/json',
+            'Authorization': token,
+        }
+        if params:
+            response = requests.post(url, headers=headers, params=params)
+        else:
+            response = requests.post(url, headers=headers)
+
+        if response.status_code != 200:
+            error = 'HTTPError: {}'.format(response.status_code)
+            return {'success': False, 'error': error}
+        try:
+            return response.json()
+        except ValueError as err:
+            return {'success': False, 'error': err}
+
+    def _DELETE(self, url, params=None):
+        '''
+        delete api
+        :param url: String. endpoint to fetch
+        :param params: query parameters given
+        '''
+        token = "Bearer {}".format(self.access_token)
+        headers = {
+            'Accept': 'application/json',
+            'Authorization': token,
+        }
+        if params:
+            response = requests.delete(url, headers=headers, params=params)
+        else:
+            response = requests.delete(url, headers=headers)
+
+        if response.status_code != 200:
+            error = 'HTTPError: {}'.format(response.status_code)
+            return {'success': False, 'error': error}
+        try:
+            return response.json()
+        except ValueError as err:
+            return {'success': False, 'error': err}
+
     def get_contest_problem(self, contest_code, problem_code):
         '''
         get information about a problem of a contest
@@ -150,7 +198,7 @@ class Codechef(object):
             ('language', language),
             ('input', sample_input),
         )
-        response = self._GET(url, params)
+        response = self._POST(url, params)
 
         return response
 
@@ -333,35 +381,91 @@ class Codechef(object):
         '''
         pass
 
-    def get_submissions(self):
+    def get_submissions(self, result='', year='', username='', language='', problem_code='', contest_code='', fields=[]):
         '''
+        get submissions
+        :param result: String. Search submission by result, eg. AC, WA, RE etc.
+        :param year: Integer. Search submission by year, eg. 2012
+        :param username: String. Search submission by username, eg. arpit147
+        :param language: String. Search submission by language, eg. C++ 4.3.2
+        :param problem_code: String. Code for problem, eg. SALARY
+        :param contest_code: String. Code of contest, eg. JAN13
+        :param fields: List. Possible fields are: id, date, username, problemCode, language, contestCode, result, time, memory. Multiple fields can be entered using comma.
         '''
-        pass
+        url = 'https://api.codechef.com/submissions/'
+        params = (
+            ('result', result),
+            ('year', year),
+            ('username', username),
+            ('language', language),
+            ('problemCode', problem_code),
+            ('contestCode', contest_code),
+            ('fields', ','.join(fields)),
+        )
+        response = self._GET(url, params)
 
-    def get_submission_details(self):
-        '''
-        '''
-        pass
+        return response
 
-    def add_problem_todo(self):
+    def get_submission_details(self, submission_id, fields=[]):
         '''
+        fetches details of a submission.
+        :param submission_id: Integer. submission id
+        :param fields: List. Possible fields are: id, date, username, problemCode, language, contestCode, result, time, memory. Multiple fields can be entered using comma.
         '''
-        pass
+        url = 'https://api.codechef.com/submissions/'
+        params = (
+            ('fields', ','.join(fields)),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def add_problem_todo(self, problem_code, contest_code):
+        '''
+        adds a problem to todo list
+        :param problem_code: String.
+        :param contest_code: String.
+        '''
+        url = 'https://api.codechef.com/todo/add'
+        params = (
+            ('problemCode', problem_code),
+            ('contestCode', contest_code),
+        )
+        response = self._POST(url, params)
+
+        return response
 
     def delete_todo_all(self):
         '''
+        deletes all the problems added to todo list
         '''
-        pass
+        url = 'https://api.codechef.com/todo/delete/all'
+        response = self._DELETE(url)
 
-    def delete_problem_todo(self):
-        '''
-        '''
-        pass
+        return response
 
-    def get_todo_list(self):
+    def delete_problem_todo(self, problem_code):
         '''
         '''
-        pass
+        url = 'https://api.codechef.com/todo/delete/'
+        params = (
+            ('problemCode', problem_code),
+        )
+        response = self._DELETE(url, params)
+
+        return response
+
+    def get_todo_list(self, fields=[]):
+        '''
+        gets problems listed in todo
+        '''
+        url = 'https://api.codechef.com/todo/problems'
+        params = (
+            ('fields', ','.join(fields)),
+        )
+        response = self._GET(url, params)
+
+        return response
 
     def get_user_list(self, search, fields=[], offset=0, limit=10):
         '''
