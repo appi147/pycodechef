@@ -298,6 +298,71 @@ class Codechef(object):
 
         return response
 
+    def add_set(self):
+        '''
+        '''
+        pass
+
+    def delete__set(self):
+        '''
+        '''
+        pass
+
+    def get_set_details(self):
+        '''
+        '''
+        pass
+
+    def add_member_set(self):
+        '''
+        '''
+        pass
+
+    def delete_member_set(self):
+        '''
+        '''
+        pass
+
+    def get_member_set(self):
+        '''
+        '''
+        pass
+
+    def update_set(self):
+        '''
+        '''
+        pass
+
+    def get_submissions(self):
+        '''
+        '''
+        pass
+
+    def get_submission_details(self):
+        '''
+        '''
+        pass
+
+    def add_problem_todo(self):
+        '''
+        '''
+        pass
+
+    def delete_todo_all(self):
+        '''
+        '''
+        pass
+
+    def delete_problem_todo(self):
+        '''
+        '''
+        pass
+
+    def get_todo_list(self):
+        '''
+        '''
+        pass
+
     def get_user_list(self, search, fields=[], offset=0, limit=10):
         '''
         get users list
