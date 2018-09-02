@@ -28,7 +28,7 @@ class Codechef(object):
         response = response.json()
 
         if response['status'] == "OK":
-            print('Fetching access token...')
+            # print('Fetching access token...')
             self.access_token = response['result']['data']['access_token']
         else:
             print('Error', response)
@@ -222,7 +222,7 @@ class Codechef(object):
         :param offset: Integer. Starting index of list
         :param limit: Integer. Number of entities to be fetched, max 100
         '''
-        url = 'https://api.codechef.com/ide/institution'
+        url = 'https://api.codechef.com/institution'
         params = (
             ('search', search),
             ('offset', offset),
@@ -239,7 +239,7 @@ class Codechef(object):
         :param offset: Integer. Starting index of list
         :param limit: Integer. Number of languages to be fetched, max 100
         '''
-        url = 'https://api.codechef.com/ide/language'
+        url = 'https://api.codechef.com/language'
         params = (
             ('search', search),
             ('offset', offset),
@@ -480,7 +480,7 @@ class Codechef(object):
         :param submission_id: Integer. submission id
         :param fields: List. Possible fields are: id, date, username, problemCode, language, contestCode, result, time, memory. Multiple fields can be entered using comma.
         '''
-        url = 'https://api.codechef.com/submissions/'
+        url = 'https://api.codechef.com/submissions/' + str(submission_id)
         params = (
             ('fields', ','.join(fields)),
         )
