@@ -346,40 +346,108 @@ class Codechef(object):
 
         return response
 
-    def add_set(self):
+    def add_set(self, set_name, description):
         '''
+        adds the set to user's account
+        :param set_name: String. Set name in the form of string
+        :param description: String. Enter the description of the set
         '''
-        pass
+        url = 'https://api.codechef.com/sets/add'
+        params = (
+            ('setName', set_name),
+            ('description', description),
+        )
+        response = self._POST(url, params)
 
-    def delete__set(self):
-        '''
-        '''
-        pass
+        return response
 
-    def get_set_details(self):
+    def delete_set(self, set_name):
         '''
+        delete the set from the user's account
+        :param set_name: String. Enter the name of the set you want to delete
         '''
-        pass
+        url = 'https://api.codechef.com/sets/delete'
+        params = (
+            ('setName', set_name),
+        )
+        response = self._DELETE(url, params)
 
-    def add_member_set(self):
-        '''
-        '''
-        pass
+        return response
 
-    def delete_member_set(self):
+    def get_set_details(self, fields=[]):
         '''
+        shows all sets created by user
+        :param fields: List. Possible fields are: setName, description.
         '''
-        pass
+        url = 'https://api.codechef.com/sets/'
+        params = (
+            ('fields', ','.join(fields)),
+        )
+        response = self._GET(url, params)
 
-    def get_member_set(self):
-        '''
-        '''
-        pass
+        return response
 
-    def update_set(self):
+    def add_member_set(self, set_name, member_handle):
         '''
+        adds set members to an existing set
+        :param set_name: String. Set name.
+        :param member_handle: String. Enter the username.
         '''
-        pass
+        url = 'https://api.codechef.com/sets/members/add'
+        params = (
+            ('set_name', set_name),
+            ('member_handle', member_handle),
+        )
+        response = self._POST(url, params)
+
+        return response
+
+    def delete_member_set(self, set_name, member_handle):
+        '''
+        removes members belonging to a set
+        :param set_name: String. Set name whose set member you want to delete.
+        :param member_handle: String. Enter the username of the set member you want to remove from set.
+        '''
+        url = 'https://api.codechef.com/sets/members/delete'
+        params = (
+            ('set_name', set_name),
+            ('member_handle', member_handle),
+        )
+        response = self._DELETE(url, params)
+
+        return response
+
+    def get_member_set(self, set_name, fields=[]):
+        '''
+        get set details
+        :param set_name: String. Set name
+        :param fields: List. Possible fields are: setName, memberName, country, allContestRating,longContestRating, shortContestRating, lTimeContestRating, allSchoolContestRating, longSchoolContestRating, shortSchoolContestRating, lTimeSchoolContestRating. Multiple fields can be entered using comma.
+        '''
+        url = 'https://api.codechef.com/sets/members/get'
+        params = (
+            ('setName', set_name),
+            ('fields', ','.join(fields)),
+        )
+        response = self._GET(url, params)
+
+        return response
+
+    def update_set(self, set_name, set_name_new, description):
+        '''
+        updates set
+        :param set_name: String. Set name
+        :param set_name_new: String. New set name
+        :param description: String. Description
+        '''
+        url = 'https://api.codechef.com/sets/update'
+        params = (
+            ('setName', set_name),
+            ('setNameNew', set_name_new),
+            ('description', description),
+        )
+        response = self._PUT(url, params)
+
+        return response
 
     def get_submissions(self, result='', year='', username='', language='', problem_code='', contest_code='', fields=[]):
         '''
