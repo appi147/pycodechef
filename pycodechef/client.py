@@ -65,7 +65,7 @@ class Codechef(object):
         except ValueError as err:
             return {'success': False, 'error': err}
 
-    def _POST(self, url, params=None):
+    def _POST(self, url, params=None, data=None):
         '''
         post to api
         :param url: String. endpoint to fetch
@@ -76,8 +76,12 @@ class Codechef(object):
             'Accept': 'application/json',
             'Authorization': token,
         }
-        if params:
+        if params and data:
+            response = requests.post(url, headers=headers, params=params, data=data)
+        elif params:
             response = requests.post(url, headers=headers, params=params)
+        elif data:
+            response = requests.post(url, headers=headers, data=data)
         else:
             response = requests.post(url, headers=headers)
 
@@ -107,7 +111,7 @@ class Codechef(object):
         except ValueError as err:
             return {'success': False, 'error': err}
 
-    def _PUT(self, url, params=None):
+    def _PUT(self, url, params=None, data=None):
         '''
         put api
         :param url: String. endpoint to fetch
@@ -118,8 +122,12 @@ class Codechef(object):
             'Accept': 'application/json',
             'Authorization': token,
         }
-        if params:
+        if params and data:
+            response = requests.put(url, headers=headers, params=params, data=data)
+        elif params:
             response = requests.put(url, headers=headers, params=params)
+        elif data:
+            response = requests.put(url, headers=headers, data=data)
         else:
             response = requests.put(url, headers=headers)
 
@@ -365,11 +373,11 @@ class Codechef(object):
         :param description: String. Enter the description of the set
         '''
         url = 'https://api.codechef.com/sets/add'
-        params = (
+        data = (
             ('setName', set_name),
             ('description', description),
         )
-        response = self._POST(url, params)
+        response = self._POST(url, data=data)
 
         return response
 
@@ -406,11 +414,11 @@ class Codechef(object):
         :param member_handle: String. Enter the username.
         '''
         url = 'https://api.codechef.com/sets/members/add'
-        params = (
+        data = (
             ('setName', set_name),
             ('memberHandle', member_handle),
         )
-        response = self._POST(url, params)
+        response = self._POST(url, data=data)
 
         return response
 
@@ -452,12 +460,12 @@ class Codechef(object):
         :param description: String. Description
         '''
         url = 'https://api.codechef.com/sets/update'
-        params = (
+        data = (
             ('setName', set_name),
             ('setNameNew', set_name_new),
             ('description', description),
         )
-        response = self._PUT(url, params)
+        response = self._PUT(url, data=data)
 
         return response
 
@@ -507,11 +515,11 @@ class Codechef(object):
         :param contest_code: String.
         '''
         url = 'https://api.codechef.com/todo/add'
-        params = (
+        data = (
             ('problemCode', problem_code),
             ('contestCode', contest_code),
         )
-        response = self._POST(url, params)
+        response = self._POST(url, data=data)
 
         return response
 
