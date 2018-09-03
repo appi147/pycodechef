@@ -60,9 +60,6 @@ class Codechef(object):
         else:
             response = requests.get(url, headers=headers)
 
-        if response.status_code != 200:
-            error = 'HTTPError: {}'.format(response.status_code)
-            return {'success': False, 'error': error}
         try:
             return response.json()
         except ValueError as err:
@@ -84,9 +81,6 @@ class Codechef(object):
         else:
             response = requests.post(url, headers=headers)
 
-        if response.status_code != 200:
-            error = 'HTTPError: {}'.format(response.status_code)
-            return {'success': False, 'error': error}
         try:
             return response.json()
         except ValueError as err:
@@ -108,9 +102,27 @@ class Codechef(object):
         else:
             response = requests.delete(url, headers=headers)
 
-        if response.status_code != 200:
-            error = 'HTTPError: {}'.format(response.status_code)
-            return {'success': False, 'error': error}
+        try:
+            return response.json()
+        except ValueError as err:
+            return {'success': False, 'error': err}
+
+    def _PUT(self, url, params=None):
+        '''
+        put api
+        :param url: String. endpoint to fetch
+        :param params: query parameters given
+        '''
+        token = "Bearer {}".format(self.access_token)
+        headers = {
+            'Accept': 'application/json',
+            'Authorization': token,
+        }
+        if params:
+            response = requests.put(url, headers=headers, params=params)
+        else:
+            response = requests.put(url, headers=headers)
+
         try:
             return response.json()
         except ValueError as err:
