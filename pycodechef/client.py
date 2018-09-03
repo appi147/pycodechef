@@ -22,7 +22,7 @@ class Codechef(object):
             'content-Type': 'application/json',
         }
 
-        data = '{{"grant_type":"client_credentials" , "scope":"public", "client_id":"{}","client_secret":"{}"}}'.format(client_id, client_secret)
+        data = '{{"grant_type":"client_credentials" , "scope":"public set todo submission", "client_id":"{}","client_secret":"{}"}}'.format(client_id, client_secret)
 
         response = requests.post('https://api.codechef.com/oauth/token', headers=headers, data=data)
         response = response.json()
