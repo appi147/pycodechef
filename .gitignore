@@ -1,2 +1,5 @@
 test.py
 *.pyc
+build/*
+dist/*
+pycodechef.egg-info/*
