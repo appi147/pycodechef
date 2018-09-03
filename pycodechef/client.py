@@ -407,8 +407,8 @@ class Codechef(object):
         '''
         url = 'https://api.codechef.com/sets/members/add'
         params = (
-            ('set_name', set_name),
-            ('member_handle', member_handle),
+            ('setName', set_name),
+            ('memberHandle', member_handle),
         )
         response = self._POST(url, params)
 
@@ -422,8 +422,8 @@ class Codechef(object):
         '''
         url = 'https://api.codechef.com/sets/members/delete'
         params = (
-            ('set_name', set_name),
-            ('member_handle', member_handle),
+            ('setName', set_name),
+            ('memberHandle', member_handle),
         )
         response = self._DELETE(url, params)
 
